@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>7-LOGO</title>
+
+
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			padding: 0;
+			margin: 0;
+			background-color: #333;
+			color: #fff;
+			font-family: 'Roboto', arial;
+		}
+
+		textarea,
+		button,
+		canvas {
+			width: 640px;
+			margin: 10px auto;
+			display: block
+		}
+
+		textarea {
+			padding: 15px;
+			background-color: #222;
+			color: #fff;
+			border: 0;
+			outline: 0;
+			height: 100px;
+			resize: none;
+			font-size: 20px
+		}
+	</style>
+</head>
+
+<body>
+
+	<textarea id="editor">fd 50 rt 90 fd 50 rt 90 pu fd 50 rt 90 pd fd 50</textarea>
+
+	<script src="../libraries/p5.js"></script>
+	<script src="../libraries/p5.dom.js"></script>
+	<script src="./turtle.js"></script>
+	<script src="sketch.js"></script>
+</body>
+
+</html>
