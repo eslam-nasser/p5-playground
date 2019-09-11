@@ -2,6 +2,7 @@ let angle = 0;
 const points = [];
 let L;
 let mySound;
+let clockWise = true;
 
 function preload() {
     soundFormats('mp3', 'ogg');
@@ -9,48 +10,39 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(640, 480);
+    createCanvas(window.innerWidth, window.innerHeight);
     L = new Line();
-    mySound.setVolume(1);
-    points.push(new Point(floor(width / 2) - 50, floor(height / 4)));
+    for (let i = 0; i < 10; i++) {
+        points.push(new Point(random(width), random(height)));
+    }
 }
 
 function draw() {
     background(55);
-    // frameRate(5);
     noStroke();
-    // if (Math.abs(angle) % 3 === 0) {
-    // if (Math.abs(angle) % 3 === 0) {
-    //     console.log('half');
-    // }
 
-    // for (let i = 0; i < points.length; i++) {
-    //     const p = points[i];
-    //     p.draw();
-    //     // console.log(
-    //     //     'TCL: isBetween(L.topPoint, L.bottomPoint, p)',
-    //     //     isBetween(L.topPoint, L.bottomPoint, p)
-    //     // );
-    //     // if (intersect(L, p)) {
-    //     // if (isBetween(L.topPoint, L.bottomPoint, p)) {
-    //     if (L.isOnLine(p)) {
-    //         console.log('yes!');
-    //         // L.setCenter(p.x, p.y);
-    //         // p.isCenter = true;
-    //         // mySound.play();
-    //     }
-    // }
+    for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        p.draw();
+        if (!p.used && intersect(L, p)) {
+            L.setCenter(p.x, p.y);
+            p.used = true;
+            mySound.play();
+            clockWise = !clockWise;
+        }
+    }
 
     L.draw();
-    // if (points.length) {
-    // }
 
-    angle -= 0.01;
+    if (clockWise) {
+        angle += 0.01;
+    } else {
+        angle -= 0.01;
+    }
 }
 
 function mouseClicked() {
     const point = new Point(mouseX, mouseY);
-    // L.setCenter(mouseX, mouseY);
     points.push(point);
 }
 
@@ -119,14 +111,14 @@ function sameSign(a, b) {
     return Math.sign(a) == Math.sign(b);
 }
 function intersect(L, p) {
-    var x1 = L.topPoint.x,
+    var x1 = L.topPoint.x + 10,
         y1 = L.topPoint.y,
-        x2 = L.bottomPoint.x,
+        x2 = L.bottomPoint.x - 10,
         y2 = L.bottomPoint.y,
-        x3 = p.x,
-        y3 = p.y,
-        x4 = p.x,
-        y4 = p.y;
+        x3 = p.x + 10,
+        y3 = p.y + 10,
+        x4 = p.x - 10,
+        y4 = p.y - 10;
 
     var a1, a2, b1, b2, c1, c2;
     var r1, r2, r3, r4;
@@ -173,26 +165,4 @@ function intersect(L, p) {
 
     // lines_intersect
     return 1; //lines intersect, return true
-}
-
-function isBetween(a, b, c) {
-    const crossproduct = (c.y - a.y) * (b.x - a.x) - (c.x - a.x) * (b.y - a.y);
-
-    // compare versus epsilon for floating point values, or != 0 if using integers
-    if (Math.abs(crossproduct) > Number.EPSILON) {
-        return false;
-    }
-
-    const dotproduct = (c.x - a.x) * (b.x - a.x) + (c.y - a.y) * (b.y - a.y);
-    if (dotproduct < 0) {
-        return false;
-    }
-
-    const squaredlengthba =
-        (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
-    if (dotproduct > squaredlengthba) {
-        return false;
-    }
-
-    return true;
 }

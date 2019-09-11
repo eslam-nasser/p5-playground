@@ -18,6 +18,19 @@
                 background-color: #333;
                 color: #fff;
                 font-family: 'Roboto', arial;
+                overflow: hidden;
+            }
+            p {
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+                font-size: 15px;
+            }
+            [type='range'] {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                font-size: 15px;
             }
 
             /* canvas {
@@ -37,5 +50,7 @@
         <script src="./Point.js"></script>
         <script src="./Line.js"></script>
         <script src="sketch.js"></script>
+
+        <p>Click to add new Points</p>
     </body>
 </html>
